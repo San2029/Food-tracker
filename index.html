@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#123c32">
+<title>FoodTrack</title>
+<style>
+:root{--bg:#f3f6f4;--card:#fff;--ink:#15251f;--muted:#64746d;--green:#176b50;--line:#e0e8e3;--red:#b42318}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,Segoe UI,sans-serif;padding:0 0 28px}
+header{background:#123c32;color:white;padding:22px 18px 20px;border-radius:0 0 24px 24px}
+.top{display:flex;align-items:center;justify-content:space-between}.brand{font-size:23px;font-weight:800;letter-spacing:-.5px}.sub{opacity:.78;font-size:12px;margin-top:3px}
+main{max-width:720px;margin:auto;padding:16px}.summary{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:-3px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:15px;box-shadow:0 3px 14px #123c3208}
+.label{color:var(--muted);font-size:12px}.big{font-size:24px;font-weight:800;margin-top:4px}.section{font-size:16px;font-weight:750;margin:22px 2px 10px}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.food{border:1px solid var(--line);border-radius:15px;background:white;text-align:left;padding:13px;min-height:88px;color:var(--ink);cursor:pointer}
+.food:active{transform:scale(.98);background:#edf7f1}.food .name{font-weight:750;font-size:15px}.food .price{color:var(--green);font-weight:750;margin-top:5px}.food .hint{font-size:11px;color:var(--muted);margin-top:3px}
+.row{display:flex;align-items:center;justify-content:space-between;gap:8px}.muted{color:var(--muted);font-size:12px}
+button,input{font:inherit}button{cursor:pointer}.btn{border:0;border-radius:12px;padding:12px 14px;font-weight:750;background:var(--green);color:white}.btn.secondary{background:#e7f1eb;color:#164d3b}.btn.danger{background:#fff0ee;color:var(--red)}.btn.small{padding:7px 10px;border-radius:9px}
+.items{display:flex;flex-direction:column;gap:8px}.lineitem{display:flex;align-items:center;gap:10px;background:white;border:1px solid var(--line);padding:11px;border-radius:13px}.iteminfo{flex:1;min-width:0}.itemname{font-weight:700}.qty{display:flex;align-items:center;gap:8px}.qty button{width:30px;height:30px;border:1px solid var(--line);background:#f7faf8;border-radius:9px;font-weight:800}.amount{font-weight:750;min-width:64px;text-align:right}
+input{border:1px solid #d4dfd8;border-radius:10px;padding:11px;background:white;color:var(--ink);width:100%;min-width:0}
+.formgrid{display:grid;grid-template-columns:1fr 100px auto;gap:8px;margin-top:10px}.receiptTotal{font-size:23px;font-weight:850}.actions{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:12px}
+.historyentry{border-bottom:1px solid var(--line);padding:10px 0}.historyentry:last-child{border:0}
+.empty{text-align:center;color:var(--muted);padding:18px;font-size:13px}
+.note{font-size:11px;color:var(--muted);line-height:1.45;margin:14px 2px}
+@media(min-width:560px){.grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+</style>
+</head>
+<body>
+<header><div class="top"><div><div class="brand">🍽️ FoodTrack</div><div class="sub">Simple daily sales & receipts</div></div><button class="btn secondary" id="editMode">Edit menu</button></div></header>
+<main>
+ <section class="summary">
+  <div class="card"><div class="label">CURRENT ORDER</div><div class="big" id="itemCount">0 items</div></div>
+  <div class="card"><div class="label">ORDER TOTAL</div><div class="big" id="total">₹0.00</div></div>
+ </section>
+ <div class="section">Food menu <span class="muted">· tap to add</span></div>
+ <div id="menu" class="grid"></div>
+ <section id="editor" class="card" hidden style="margin-top:12px">
+  <div style="font-weight:750">Add a food item</div>
+  <div class="formgrid"><input id="newName" placeholder="Food name" maxlength="40"><input id="newPrice" type="number" min="0" step=".01" placeholder="Price"><button class="btn" id="addFood">Add</button></div>
+  <div class="muted" style="margin-top:8px">To change an existing price, tap its price in the menu while Edit menu is on.</div>
+ </section>
+ <div class="section">Current order</div>
+ <div id="order" class="items"></div>
+ <div class="card" style="margin-top:12px">
+  <div class="row"><div><div class="label">GRAND TOTAL</div><div class="receiptTotal" id="grandTotal">₹0.00</div></div><button class="btn secondary" id="clearOrder">Clear order</button></div>
+  <div class="actions"><button class="btn" id="pdf">Save PDF receipt</button><button class="btn secondary" id="complete">Complete sale</button></div>
+ </div>
+ <div class="section">Today's sales</div>
+ <div class="card"><div class="row"><div><div class="label">SAVED SALES TODAY</div><div class="big" id="todaySales">₹0.00</div></div><div style="text-align:right"><div class="label">ORDERS</div><div class="big" id="todayCount">0</div></div></div><div id="history"></div><button class="btn danger small" id="clearHistory" style="margin-top:10px">Clear sales history</button></div>
+ <p class="note">Data stays on this device. Export receipts before clearing app data or uninstalling. This is a basic sales tracker, not tax/accounting software.</p>
+</main>
+<script type="module" src="/src/main.js"></script>
+</body>
+</html>

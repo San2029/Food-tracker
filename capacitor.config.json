@@ -1,0 +1,6 @@
+{
+  "appId": "com.san.foodtrack",
+  "appName": "FoodTrack",
+  "webDir": "dist",
+  "bundledWebRuntime": false
+}
